@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+    <script src="forword3days.js"></script>
+</head>
+<body>
+
+    <input type="text" id = "input1" placeholder="请输入日期（如：20190819）" style="width: 200px"/>
+    <button type="button" onclick = "getDate()">Click Me!</button>
+    <div id = 'test'></div>
+    <div id = 'date'></div>
+</body>
+<script type="text/javascript">
+    function getDate(){
+        var a = document.getElementById('input1').value;
+        var sysdate = string2Date(a);
+        var dateArray = beforeDay(3,sysdate);
+        // alert(dateArray)
+        document.getElementById('test').innerText = dateArray
+            // '前天：' + dateArray[0] + '昨天' + dateArray[1] + '今天' + dateArray[2];
+    }
+    function beforeDay(num,sysdate){
+        //设置日期，当前日期的前num天
+        var myDate = new Date(sysdate);
+        myDate.setDate(myDate.getDate() - (num-1));
+        var dateArray = [];
+        var dateTemp;
+        var flag = 1;
+        for (var i = 0; i < num; i++) {
+            dateTemp = myDate.getFullYear()+'-'+(myDate.getMonth()+1)+'-'+myDate.getDate();
+            dateArray.push(dateTemp);
+            myDate.setDate(myDate.getDate() + flag);
+        }
+        return dateArray;
+    }
+
+    function string2Date(str){
+        //将8位字符日期格式拼接为带中划线的字符日期格式
+        var dateString = str.substring(0,4) + '-' + str.substring(4,6) + '-' + str.substring(6,8);
+        //将字符串转换成Date类型
+        var temp  = new Date(dateString);
+        //获取不带 0 的日期字符串
+        var returnDate = temp.getFullYear()+'-'+(temp.getMonth()+1)+"-"+temp.getDate();
+        return returnDate;
+    }
+
+</script>
+</html>
